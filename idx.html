@@ -13,7 +13,11 @@
     let scene, camera, renderer;
 
     function init() {
-
+      
+      renderer = new THREE.WebGLRenderer({antialias:true});
+      renderer.setSize(window.innerWidth,window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+      
       scene = new THREE.Scene();
       scene.background = new THREE.Color(0xdddddd);
 
@@ -23,7 +27,7 @@
       camera.position.y = 100;
       camera.position.z = 1000;
 
-      controls = new THREE.OrbitControls( camera );
+      controls = new THREE.OrbitControls( camera, renderer.domElement );
       controls.addEventListener('change', renderer);
 
       hlight = new THREE.AmbientLight (0x404040,100);
@@ -46,9 +50,7 @@
       light4.position.set(-500,300,500);
       scene.add(light4);
 
-      renderer = new THREE.WebGLRenderer({antialias:true});
-      renderer.setSize(window.innerWidth,window.innerHeight);
-      document.body.appendChild(renderer.domElement);
+      
 
       let loader = new THREE.GLTFLoader();
       loader.load('scene.gltf', function(gltf){
